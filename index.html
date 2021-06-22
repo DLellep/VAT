@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VATLAYER</title>
+    <link href="starter-template.css" rel="stylesheet">
+</head>
+<body>
+<!----------->
+<!--Content-->
+<!----------->
+<div>
+    <h1>VATLAYER</h1>
+    <!--input field-->
+    <input type="text" id="input" />
+      <!--button-->
+    <button id="searchbutton">Search</button>
+</div>
+
+
+
+<!--API fetching values -->
+<!--API fetching values -->
+<!--API fetching values-->
+
+<div class="results" id="results"></div>
+
+
+<!--FETCH FROM API-->
+<!--FETCH FROM API-->
+<!--FETCH FROM API-->
+
+<script>
+    // constants that will hold info
+    const searchbutton = document.getElementById("searchbutton");
+    const input = document.getElementById("input");
+    const resultContainer = document.getElementById("results");
+    // main constant, that actually fetches and displays value
+    const getVATFromAPI = (vat) => {
+        // address that gives us the
+        fetch(`http://www.apilayer.net/api/validate?access_key=22b61d807cbd2f3cb292f49fe3032b42&vat_number=${vat}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then(({ valid, database, format_valid, query, country_code, vat_number, company_name, company_address }) => {
+                resultContainer.innerHTML = `
+                    Valid: ${valid}<br>
+                    Query: ${query}<br>
+                    Country: ${country_code}<br>
+                    Vat Number: ${vat_number}<br>
+                    Database: ${database}<br>
+                    Format Valid: ${format_valid}<br>
+                    Name of the company: ${company_name}<br>
+                    Address of the company: ${company_address}<br>
+                    `;
+            });
+    };
+// eventListener for when someone clicks the button
+    searchbutton.addEventListener("click", (event) => {
+        getVATFromAPI(input.value);
+    });
+</script>
+</body>
+</html>
